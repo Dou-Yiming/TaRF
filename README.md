@@ -1,2 +1,9 @@
 # Tactile-Augmented Radiance Fields
-This is the repository that contains source code for the TaRF website.
+
+Yiming Dou, Fengyu Yang, Yi Liu, Antonio Loquercio, Andrew Owens
+
+University of Michigan, Yale University, UC Berkeley
+
+CVPR 2024
+
+Code is coming soon!
