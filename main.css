@@ -1430,7 +1430,7 @@ html.w-mod-touch * {
     }
 
     #abstract {
-        margin-top: 2vw;
+        margin-top: 1vw;
         width: 90%;
         margin-left: auto;
         margin-right: auto;
@@ -1491,13 +1491,13 @@ html.w-mod-touch * {
     }
 
     .button {
-        margin-top: 5vw;
-        font-size: 3vw;
-        margin-left: 4vw;
-        margin-right: 4vw;
-        width: 21vw;
-        height: 8vw;
-        border-radius: 8vw;
+        margin-top: 2vw;
+        font-size: 2.5vw;
+        margin-left: 3vw;
+        margin-right: 3vw;
+        width: 15vw;
+        height: 6vw;
+        border-radius: 2vw;
     }
 
     hr.rounded {
