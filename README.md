@@ -6,4 +6,4 @@ University of Michigan, Yale University, UC Berkeley
 
 CVPR 2024
 
-<video src="./assets/figs/table_indoor.mp4"></video>
+![teaser](./assets/figs/table_indoor.mp4)
