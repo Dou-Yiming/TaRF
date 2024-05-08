@@ -931,7 +931,7 @@ hr.rounded {
 
 #overview > .bibtex {
     font-family: "Courier", monospace;
-    font-size: 0.45vw !important;
+    font-size: 0.8vw !important;
     color: #2f2f2f;
     background-color: #f2f2f2;
     border: 5px;
@@ -1050,7 +1050,6 @@ html.w-mod-touch * {
 #content-mobile {display: none;}
 
 @media screen and (max-width: 768px) {
-
     #content-desktop {display: none;}
     #content-mobile {display: block;}
 
@@ -1361,38 +1360,11 @@ html.w-mod-touch * {
 }
 
 /* smartphone and tablet optimizations */
+/* @media only screen and (max-width: 1000px) { */
 @media only screen and (max-width: 1000px) {
 
-    /* #video_grid {
-        display: none;
-    } */
-
     #video_grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    #video_grid > .video_wrapper {
-        /* width: 33.3333%; */
-        width: 48%;
-    }
-    
-    #video_grid > .video_wrapper > .video_container {
-        display: grid;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    #video_grid > .video_wrapper > .video_container > video {
-        width: 100%;
-        height: auto;
-        grid-column: 1;
-        grid-row: 1;
-        margin: 0;
-        padding: 0;
-        display: block; /* Ensures the video fills its container */
-        transition: transform 0.5s ease; /* Smooth transition for dimming */
+        display: none;
     }
 
     #title_slide {
@@ -1431,7 +1403,7 @@ html.w-mod-touch * {
         width: 90%;
         margin-left: auto;
         margin-right: auto;
-        font-size: 2vw;
+        font-size: 3.2vw;
     }
 
     .title_left {
@@ -1509,6 +1481,18 @@ html.w-mod-touch * {
         margin-left: auto;
         margin-right: auto;
         text-align: center;
+    }
+
+    #overview h3 {
+        color: #2f2f2f;
+        font-family: Charter, Georgia, serif;
+        font-weight: normal;
+        font-size: 1.2vw;
+        padding-top: 3vw;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
     }
 
     #overview p {
@@ -1654,6 +1638,10 @@ html.w-mod-touch * {
 
     .barplot > img {
         width: 90%;
+    }
+
+    .barplot > video {
+        width: 48%;
     }
 
     .scaling {
