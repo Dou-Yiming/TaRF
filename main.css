@@ -690,6 +690,10 @@ hr.rounded {
     margin-top: 0.7vw;
 }
 
+.barplot > img {
+    width: 35%;
+}
+
 .barplot > .image_container > .caption {
     margin-left: 0.7vw;
     margin-bottom: 1.0vw;
@@ -1359,8 +1363,36 @@ html.w-mod-touch * {
 /* smartphone and tablet optimizations */
 @media only screen and (max-width: 1000px) {
 
-    #video_grid {
+    /* #video_grid {
         display: none;
+    } */
+
+    #video_grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    #video_grid > .video_wrapper {
+        /* width: 33.3333%; */
+        width: 48%;
+    }
+    
+    #video_grid > .video_wrapper > .video_container {
+        display: grid;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    #video_grid > .video_wrapper > .video_container > video {
+        width: 100%;
+        height: auto;
+        grid-column: 1;
+        grid-row: 1;
+        margin: 0;
+        padding: 0;
+        display: block; /* Ensures the video fills its container */
+        transition: transform 0.5s ease; /* Smooth transition for dimming */
     }
 
     #title_slide {
@@ -1399,7 +1431,7 @@ html.w-mod-touch * {
         width: 90%;
         margin-left: auto;
         margin-right: auto;
-        font-size: 3vw;
+        font-size: 2vw;
     }
 
     .title_left {
@@ -1471,9 +1503,9 @@ html.w-mod-touch * {
         color: #2f2f2f;
         font-family: Charter, Georgia, serif;
         font-weight: normal;
-        font-size: 1.4vw;
+        font-size: 3vw;
         padding-top: 1vw;
-        width: 45%;
+        width: 90%;
         margin-left: auto;
         margin-right: auto;
         text-align: center;
@@ -1618,6 +1650,10 @@ html.w-mod-touch * {
 
     .barplot > .image_container > .caption > p {
         font-size: 1.9vw !important;
+    }
+
+    .barplot > img {
+        width: 90%;
     }
 
     .scaling {
