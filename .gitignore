@@ -165,8 +165,14 @@ cython_debug/
 outputs/
 exports/
 renders/
+logs/
+*ckpt
+src/
+
 # tensorboard log files
+/nohup.out
 events.out.*
+*out
 
 # Data
 data

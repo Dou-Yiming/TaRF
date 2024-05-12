@@ -21,6 +21,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict, List, Literal, Tuple, Type
 import os
+import os.path as osp
+import copy
 import numpy as np
 import torch
 from torch.nn import Parameter
@@ -165,26 +167,32 @@ class TaRFModel(Model):
 
         def button_cb(button: ViewerButton):
             def click_cb(click: ViewerClick):
-                print(
-                    f"Click at {click.origin} in direction {click.direction}")
                 camera_viewer = self.viewer_control.get_camera(256, None)
+
                 z = -1*torch.tensor(click.direction)
                 y = torch.cross(z, camera_viewer.camera_to_worlds[0][:3, 0])
                 x = torch.cross(y, z)
-                x /= torch.linalg.norm(x)
-                y /= torch.linalg.norm(y)
+
                 z /= torch.linalg.norm(z)
-                print(camera_viewer.camera_to_worlds[0][:3, 3])
+                y /= torch.linalg.norm(y)
+                x /= torch.linalg.norm(x)
+
                 camera_viewer.camera_to_worlds[0][:3, :3] = torch.stack(
                     [x, y, z], dim=1)
                 outputs = self.get_outputs_for_camera(camera_viewer)
-                rgb, depth = outputs['rgb'], outputs['depth']
+                depth = outputs['depth']
                 center_depth = depth[depth.shape[0]//2, depth.shape[1]//2, 0]
-                print(f"Center depth: {center_depth}")
-                
-                import copy
+
+                input_cache_dir = './outputs/touch_estimation_input_cache'
+                input_rgb_cache_dir = osp.join(input_cache_dir, 'rgb')
+                input_depth_cache_dir = osp.join(input_cache_dir, 'depth')
+                os.makedirs(input_rgb_cache_dir, exist_ok=True)
+                os.makedirs(input_depth_cache_dir, exist_ok=True)
+
+                # reneder context image
+                transform = T.ToPILImage()
+
                 camera = copy.deepcopy(camera_viewer)
-                print(camera.camera_to_worlds[0][:3, 3])
                 delta, fov = 0.45, 50
                 camera.camera_to_worlds[0][:3, 3] += (
                     delta - center_depth)*camera.camera_to_worlds[0][:3, 2]
@@ -196,22 +204,14 @@ class TaRFModel(Model):
                 camera.fy = camera.fx
                 cur_outputs = self.get_outputs_for_camera(camera)
                 cur_rgb, cur_depth = cur_outputs['rgb'], cur_outputs['depth']
-                cur_center_depth = cur_depth[cur_depth.shape[0]//2, cur_depth.shape[1]//2, 0]
-                print(f"Center depth: {cur_center_depth}")
-                transform = T.ToPILImage()
                 cur_rgb = transform(cur_rgb.permute(2, 0, 1).cpu())
-                os.makedirs(
-                    './outputs/real_time_estimation_cache/rgb', exist_ok=True)
-                os.makedirs(
-                    './outputs/real_time_estimation_cache/depth', exist_ok=True)
-                cur_rgb.save('./outputs/real_time_estimation_cache/rgb/0_40_50.png')
-                np.save('./outputs/real_time_estimation_cache/depth/0_40_50.npy',
+                cur_rgb.save(osp.join(input_rgb_cache_dir, '40_50.png'))
+                np.save(osp.join(input_depth_cache_dir, '40_50.npy'),
                         cur_depth.detach().cpu().numpy())
-                
+
+                # render spatially-aligned image
                 camera = copy.deepcopy(camera_viewer)
-                print(camera.camera_to_worlds[0][:3, 3])
                 delta, fov = 0.05, 40.86
-                touched_point = camera.camera_to_worlds[0][:3, 3] - center_depth*camera.camera_to_worlds[0][:3, 2]
                 camera.camera_to_worlds[0][:3, 3] += (
                     delta - center_depth)*camera.camera_to_worlds[0][:3, 2]
                 camera.width = torch.tensor([[480]])
@@ -222,24 +222,15 @@ class TaRFModel(Model):
                 camera.fy = camera.fx
                 cur_outputs = self.get_outputs_for_camera(camera)
                 cur_rgb, cur_depth = cur_outputs['rgb'], cur_outputs['depth']
-                cur_center_depth = cur_depth[cur_depth.shape[0]//2, cur_depth.shape[1]//2, 0]
-                print(f"Center depth: {cur_center_depth}")
-                transform = T.ToPILImage()
                 cur_rgb = transform(cur_rgb.permute(2, 0, 1).cpu())
-                os.makedirs(
-                    './outputs/real_time_estimation_cache/rgb', exist_ok=True)
-                os.makedirs(
-                    './outputs/real_time_estimation_cache/depth', exist_ok=True)
-                cur_rgb.save('./outputs/real_time_estimation_cache/rgb/0_0_40.png')
-                np.save('./outputs/real_time_estimation_cache/depth/0_0_40.npy',
+                cur_rgb.save(osp.join(input_rgb_cache_dir, '0_40.png'))
+                np.save(osp.join(input_depth_cache_dir, '0_40.npy'),
                         cur_depth.detach().cpu().numpy())
-                np.save('./outputs/real_time_estimation_cache/touched_point.npy',
-                        touched_point)
 
                 self.viewer_control.unregister_click_cb(click_cb)
             self.viewer_control.register_click_cb(click_cb)
         self.viewer_button = ViewerButton(
-            name="Click on Scene", cb_hook=button_cb)
+            name="Touch on Scene", cb_hook=button_cb)
 
     def populate_modules(self):
         """Set the fields and modules."""
