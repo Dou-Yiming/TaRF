@@ -164,6 +164,7 @@ cython_debug/
 # Experiments and outputs
 outputs/
 exports/
+dataset_release/
 renders/
 logs/
 *ckpt
