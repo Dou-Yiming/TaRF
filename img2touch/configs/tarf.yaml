@@ -17,8 +17,7 @@ model:
     scale_by_std: true
     monitor: val/loss_simple_ema
     ignore_keys: []
-    ckpt_path: logs/tmp/last.ckpt
-    # ckpt_path: logs/img2touch_tactile_nerf_resnet_rgbdb_iterative/checkpoints/epoch=000007.ckpt
+    ckpt_path: pretrained_models/img2touch.ckpt
 
     scheduler_config:
       target: ldm.lr_scheduler.LambdaLinearScheduler
@@ -81,7 +80,6 @@ model:
           target: torch.nn.Identity
     cond_stage_config:
       target: ldm.modules.encoders.modules.ResnetRGBDEncoder
-      # ckpt_path: logs/ckpts/ResnetEncoder/rgb_enc.pth
 
       params:
         # model_name: resnet18

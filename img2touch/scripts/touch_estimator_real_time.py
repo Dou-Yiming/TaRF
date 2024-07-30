@@ -352,20 +352,16 @@ class TouchEstimator:
                     sample_tacs = [Image.open(os.path.join(outdir, f"{gen_i:02}.png")) for gen_i in range(generated_image_count)]
                     sample_tacs = [TF.rotate(tac, angle=-90) for tac in sample_tacs]
                     sample_tacs = torch.stack([self.ranking_preprocess['tac'](tac) for tac in sample_tacs]).cuda()
+                    print("re-ranking...")
                     with torch.no_grad():
                         rgb_feats = self.ranking_rgb_encoder(rgb)
                         tac_feats = self.ranking_tac_encoder(sample_tacs)
                         dot_prods = rgb_feats.mm(tac_feats.t()).cpu()
+                    print('max dot product: {:.4f}'.format(torch.max(dot_prods)))
+                    print('min dot product: {:.4f}'.format(torch.min(dot_prods)))
                     max_sample_id = int(torch.argmax(dot_prods).cpu())
-                    touch_estimation_folder = os.path.join('/home/ymdou/datac_ymdou/TaRF/nerfstudio/outputs/bench_outdoor_1_colmap/nerfacto/test/touch_estimation')
-                    touched_points_folder = os.path.join('/home/ymdou/datac_ymdou/TaRF/nerfstudio/outputs/bench_outdoor_1_colmap/nerfacto/test/touched_points')
-                    os.makedirs(touch_estimation_folder, exist_ok=True)
-                    os.makedirs(touched_points_folder, exist_ok=True)
-                    cur_frame_num = len(os.listdir(touch_estimation_folder))
                     shutil.copy(os.path.join(outdir, f"{max_sample_id:02}.png"), 
-                                os.path.join(touch_estimation_folder, f"{(cur_frame_num):05}.png"))
-                    shutil.copy('/home/ymdou/datac_ymdou/TaRF/nerfstudio/outputs/real_time_estimation_cache/touched_point.npy', 
-                                os.path.join(touched_points_folder, f"{(cur_frame_num):05}.npy"))
+                                os.path.join(outdir, f"best.png"))
                         
 
 def main():
@@ -385,6 +381,7 @@ def main():
         osp.join(depth_dir, '0_40.npy')
     ]
     bg_path = opt.bg_path
+    touch_estimator.estimate(rgb_path_list, depth_path_list, bg_path)
     
     latest_rgb_mtime = os.path.getmtime(rgb_path_list[-1])
     latest_depth_mtime = os.path.getmtime(depth_path_list[-1])
