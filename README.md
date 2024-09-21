@@ -7,7 +7,7 @@
 ![teaser](./assets/figs/tarf.gif)
 
 ## Installation
-#### 1. Install Nerfstudio modules
+### 1. Install Nerfstudio modules
 ##### 1.1. Install Nerfstudio dependencies
 [Follow these instructions](https://docs.nerf.studio/en/latest/quickstart/installation.html) up to and including "tinycudann" to install dependencies and create an environment
 ##### 1.2. Clone this repo
@@ -24,7 +24,7 @@ python -m pip install -e .
 ##### 1.5. Check the install
 Run `ns-train -h`: you should see a list of "subcommands" with tarf included among them.
 
-#### 2. Install Diffusion modules
+### 2. Install Diffusion modules
 ##### 2.1 Create another Conda environment
 `conda create --name ldm -y python=3.8`
 
@@ -40,7 +40,7 @@ python -m pip install -e .
 
 Coming soon!
 
-#### Bibtex
+### Bibtex
 
 If you find TaRF useful, please conside citing:
 
