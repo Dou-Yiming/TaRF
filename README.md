@@ -119,7 +119,7 @@ Coming soon!
 
 ### Bibtex
 
-If you find TaRF useful, please conside citing:
+If you find TaRF useful, please consider citing:
 
 ```
 @inproceedings{dou2024tactile,
