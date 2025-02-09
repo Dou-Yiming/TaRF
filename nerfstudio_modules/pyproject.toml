@@ -1,0 +1,13 @@
+[project]
+name = "tarf"
+version = "0.0.1"
+
+dependencies = [
+    "nerfstudio"
+]
+
+[tool.setuptools.packages.find]
+include = ["tarf*"]
+
+[project.entry-points.'nerfstudio.method_configs']
+tarf = 'tarf.tarf_config:tarf_method'
