@@ -69,7 +69,42 @@ mv pretrained_models TaRF/img2touch
 mv TaRF/img2touch/pretrained_models/first_stage_model.ckpt TaRF/img2touch/models/first_stage_models/kl-f8/model.ckpt
 ```
 
+### 2. Run & interact with TaRF
 
+##### 2.1 Launch Nerfstudio viewer
+
+First, pick a scene from {conference_room, clothes, office_1, stairs, table_outdoor, workroom, bench, snow, bus_stop, office_2, chair_outdoor, table_indoor lounge}
+
+Next, launch the Nerfstudio viewer:
+
+```sh
+cd TaRF/nerfstudio_modules
+ns-viewer --load-config ./outputs/{scene}_colmap/tarf/test/config.yml --vis viewer --viewer.max-num-display-images 64
+```
+
+This will provide you with a link to the Nerfstudio viewer.
+
+##### 2.2 Interact with the TaRF
+
+Now you may interact with the TaRF in the browser with the following steps:
+
+1. Click the "Touch on Scene" button at the bottom-right corner.
+2. Click the point you want to touch in the TaRF.
+
+This will give you the egocentric RGBD signal of the clicked point, saved in `TaRF/nerfstudio_modules/outputs/touch_estimation_input_cache`.
+
+### 3. Estimate touch signals
+
+First, change the `bg_path` argument in `TaRF/img2touch/scripts/bash_scripts/run_touch_estimator_real_time.sh` to `touch_bg/{scene}_colmap_40_50/bg.jpg`.
+
+Next, launch real-time touch estimator on **another GPU**:
+
+```sh
+cd TaRF/img2touch
+bash scripts/bash_scripts/run_touch_estimator_real_time.sh
+```
+
+The tactile signals can now be estimated in real-time whenever a new point is clicked, the results will be saved at `TaRF/img2touch/outputs/touch_estimator_real_time/best.png`.
 
 ## Train your own TaRF
 
