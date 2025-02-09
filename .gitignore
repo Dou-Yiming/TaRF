@@ -178,7 +178,7 @@ events.out.*
 *out
 
 # Data
-data
+nerfstudio_modules/data
 !*/data
 
 # Misc
