@@ -108,6 +108,13 @@ The tactile signals can now be estimated in real-time whenever a new point is cl
 
 ## Train your own TaRF
 
+##### 1. Train touch estimator
+
+```sh
+cd TaRF/img2touch
+bash scripts/bash_scripts/train_touch_estimator.sh
+```
+
 Coming soon!
 
 ### Bibtex
