@@ -9,7 +9,8 @@
 ## Installation
 ### 1. Install Nerfstudio modules
 ##### 1.1. Install Nerfstudio dependencies
-[Follow these instructions](https://docs.nerf.studio/quickstart/installation.html) to install dependencies and create an environment
+[Follow these instructions](https://docs.nerf.studio/quickstart/installation.html) to install dependencies and create an environment.
+
 ##### 1.2. Clone this repo
 `git clone https://github.com/Dou-Yiming/TaRF.git`
 
@@ -35,6 +36,40 @@ python -m pip install -e .
 ```
 
 ## Using TaRF
+
+### 1. Prepare data and pretrained models
+
+##### 1.1 Download COLMAP database
+
+Download the COLMAP databases (including images and camera poses of 13 scenes) from [this](https://www.dropbox.com/scl/fo/chyl14skmqqqlqn6qjn32/AEWhshTnqKn7IAE_QIxCqZM?rlkey=kcic3d0p5wyb3zad5x4srt1vc&st=2zjjhoq7&dl=0) link, then extract them:
+
+```sh
+cd TaRF/nerfstudio_modules
+mkdir data
+cd data
+tar -xvf {dir of the downloaded colmap folder}/*.tar.gz ./
+```
+
+##### 1.2 Download pertrained models
+
+Download the pretrained NeRF models from [this](https://www.dropbox.com/scl/fo/kgexp5j82t2obbfzwtol5/AJZ_nVEgWI7oE_tZrmMXw2o?rlkey=bx7o6ow6csmjsvg3svlgwjo9i&st=e6yocux0&dl=0) link, then extract them:
+
+```sh
+cd TaRF/nerfstudio_modules
+mkdir outputs
+cd outputs
+tar -xvf {dir of the downloaded NeRF folder}/*.tar.gz ./
+```
+
+Download the pretrained Diffusion models from [this](https://www.dropbox.com/scl/fi/5n9vx5991ev8av5l6ca2e/pretrained_models.tar.gz?rlkey=gdbkyot3at0hrr76np0hu220n&st=7krfblmx&dl=0) link, then extract them:
+
+```sh
+tar -xvf {dir of the downloaded Diffusion folder}/pretrained_models.tar.gz ./
+mv pretrained_models TaRF/img2touch
+mv TaRF/img2touch/pretrained_models/first_stage_model.ckpt TaRF/img2touch/models/first_stage_models/kl-f8/model.ckpt
+```
+
+
 
 ## Train your own TaRF
 
